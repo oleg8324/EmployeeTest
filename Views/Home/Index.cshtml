@@ -1,0 +1,31 @@
+﻿@using EmployeeTest.data
+@model List<Employee>
+
+<table>
+    <tr>
+        <th>ID</th>
+        <th>Type</th>
+        <th>Vacation Days</th>
+        <th>Actions</th>
+    </tr>
+    @for (int i = 0; i < Model.Count; i++)
+    {
+        <tr>
+            <td>@i</td>
+            <td>@Model[i].GetType().Name</td>
+            <td>@Model[i].VacationDays</td>
+            <td>
+                @using (Html.BeginForm("Work", "Home", new { id = i }, FormMethod.Post))
+                {
+                    <input type="number" name="days" min="0" max="260" required />
+                    <button type="submit">Work</button>
+                }
+                @using (Html.BeginForm("TakeVacation", "Home", new { id = i }, FormMethod.Post))
+                {
+                    <input type="number" step="any" name="days" min="0" max="@Model[i].VacationDays" required />
+                    <button type="submit">Take Vacation</button>
+                }
+            </td>
+        </tr>
+    }
+</table>
